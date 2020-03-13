@@ -24,11 +24,8 @@ const upsertTask = async (req, res) => {
 const getTasks = async (req, res) => {
     try {
         const data = await taskModel.getTasks();
-        if (data.length > 0) {
-            return res.status(200).send(data);
-        }
-
-        res.status(400).send('Tasks not found.')
+        
+        return res.status(200).send(data);
     } catch (err) {
         return res.status(500).send(err);
     }
