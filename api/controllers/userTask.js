@@ -7,6 +7,7 @@ const userTaskModel = require('../models/userTask');
 
 const createUserTask = async (req, res) => {
   // add in task validations
+  // add in call to increase the user's building's task count by 1
   const userTaskId = uniqid();
   const { id } = req.params;
   try {
