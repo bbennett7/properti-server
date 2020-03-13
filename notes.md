@@ -27,8 +27,12 @@ CREATE TABLE tasks (
 CREATE TABLE users_tasks (
     id varchar(100) PRIMARY KEY, 
     user_id varchar(100) REFERENCES users(id) NOT NULL,
-    property_id varchar(100) REFERENCES properties(id) NOT NULL,
+    task_id varchar(100) REFERENCES tasks(id) NOT NULL,
     urgency_level varchar(100) NOT NULL,
     status varchar(100) NOT NULL,
-    notes varchar(1000)
+    notes varchar(1000),
+    created_on timestamp NOT NULL,
+    completed_on timestamp
 )
+
+CREATE UNIQUE INDEX uc_user_task_status ON users_tasks(user_id, task_id, status) WHERE NOT (status = 'Completed')
