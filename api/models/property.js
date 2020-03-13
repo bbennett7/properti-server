@@ -1,18 +1,18 @@
 const pool = require('../../config/pg-config');
 
 const createProperty = async (id, body) => {
-    const values = [
-        id,
-        body.name,
-        body.street_address,
-        body.city,
-        body.state,
-        body.property_manager_id,
-        0
-    ]
+  const values = [
+    id,
+    body.name,
+    body.street_address,
+    body.city,
+    body.state,
+    body.property_manager_id,
+    0
+  ];
 
-    return pool.query(
-        `INSERT INTO properties(
+  return pool.query(
+    `INSERT INTO properties(
             id,
             name,
             street_address,
@@ -23,39 +23,39 @@ const createProperty = async (id, body) => {
         ) VALUES (
             $1, $2, $3, $4, $5, $6, $7
         ) RETURNING *`,
-        values
-    )
-}
+    values
+  );
+};
 
 const getPropertyById = async id => {
-    return pool.query(
-        `SELECT *
+  return pool.query(
+    `SELECT *
         FROM properties
         WHERE properties.id = ($1)`,
-        [id]
-    )
-}
+    [id]
+  );
+};
 
 const getProperties = async () => {
-    return pool.query(
-        `SELECT *
+  return pool.query(
+    `SELECT *
         FROM properties`
-    )
-}
+  );
+};
 
 const deletePropertyById = async id => {
-    return pool.query(
-        `DELETE
+  return pool.query(
+    `DELETE
         FROM properties
         WHERE id IN ($1)
         RETURNING *`,
-        [id]
-    )
-}
+    [id]
+  );
+};
 
 module.exports = {
-    createProperty,
-    getPropertyById,
-    getProperties,
-    deletePropertyById
-}
+  createProperty,
+  getPropertyById,
+  getProperties,
+  deletePropertyById
+};
