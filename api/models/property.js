@@ -29,8 +29,15 @@ const createProperty = async (id, body) => {
 
 const getPropertyById = async id => {
   return pool.query(
-    `SELECT *
+    `SELECT properties.id,
+        properties.name,
+        properties.street_address,
+        properties.state,
+        properties.outstanding_task_count,
+        (SELECT row_to_json(t) FROM users as t WHERE t.id = properties.property_manager_id) AS property_manager
         FROM properties
+        INNER JOIN users ON
+          properties.property_manager_id = users.id
         WHERE properties.id = ($1)`,
     [id]
   );
