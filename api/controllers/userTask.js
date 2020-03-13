@@ -1,9 +1,9 @@
-const Joi = require('joi');
+// const Joi = require('joi');
 const uniqid = require('uniqid');
 const moment = require('moment');
 const userTaskModel = require('../models/userTask');
 
-const validateCreateBody = body => {};
+// const validateCreateBody = body => {};
 
 const createUserTask = async (req, res) => {
   // add in task validations

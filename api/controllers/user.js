@@ -1,7 +1,7 @@
-//const Joi = require('joi');
+// const Joi = require('joi');
 const userModel = require('../models/user');
 
-//const validateCreateBody = body => {};
+// const validateCreateBody = body => {};
 
 const createUser = async (req, res) => {
   // add in user validations

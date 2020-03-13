@@ -1,8 +1,8 @@
-//const Joi = require('joi');
+// const Joi = require('joi');
 const uniqid = require('uniqid');
 const propertyModel = require('../models/property');
 
-//const validateCreateBody = body => {};
+// const validateCreateBody = body => {};
 
 const createProperty = async (req, res) => {
   // add in property validations
