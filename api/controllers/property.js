@@ -19,6 +19,17 @@ const createProperty = async (req, res) => {
     }
 }
 
+const getProperties = async (req, res) => {
+    const { id } = req.params;
+    try {
+        const data = await propertyModel.getProperties(id);
+        return res.status(200).send(data);
+
+    } catch (err) {
+        return res.status(500).send(err);
+    }
+}
+
 const getPropertyById = async (req, res) => {
     const { id } = req.params;
     try {
@@ -50,5 +61,6 @@ const deletePropertyById = async (req, res) => {
 module.exports = {
     createProperty,
     getPropertyById,
+    getProperties,
     deletePropertyById
 }

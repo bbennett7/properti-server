@@ -10,7 +10,7 @@ const createProperty = async (id, body) => {
         body.property_manager_id,
         0
     ]
-    console.log(body)
+
     return pool.query(
         `INSERT INTO properties(
             id,
@@ -36,6 +36,13 @@ const getPropertyById = async id => {
     )
 }
 
+const getProperties = async () => {
+    return pool.query(
+        `SELECT *
+        FROM properties`
+    )
+}
+
 const deletePropertyById = async id => {
     return pool.query(
         `DELETE
@@ -49,5 +56,6 @@ const deletePropertyById = async id => {
 module.exports = {
     createProperty,
     getPropertyById,
+    getProperties,
     deletePropertyById
 }
