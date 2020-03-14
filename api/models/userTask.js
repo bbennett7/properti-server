@@ -7,6 +7,7 @@ const createUserTask = async (id, userTaskId, body) => {
     userTaskId,
     id,
     body.task_id,
+    body.property_id,
     body.urgency_level,
     body.status,
     body.notes,
@@ -16,17 +17,18 @@ const createUserTask = async (id, userTaskId, body) => {
 
   return pool.query(
     `INSERT INTO users_tasks(
-            id,
-            user_id,
-            task_id,
-            urgency_level,
-            status,
-            notes,
-            created_on,
-            completed_on
-        ) VALUES (
-            $1, $2, $3, $4, $5, $6, $7, $8
-        ) RETURNING *`,
+        id,
+        user_id,
+        task_id,
+        property_id,
+        urgency_level,
+        status,
+        notes,
+        created_on,
+        completed_on
+    ) VALUES (
+        $1, $2, $3, $4, $5, $6, $7, $8, $9
+    ) RETURNING *`,
     values
   );
 };
@@ -80,9 +82,32 @@ const deleteUserTaskById = async (userId, id) => {
   );
 };
 
+const getOpenTasksByManagerId = async id => {
+  return pool.query(
+    `SELECT 
+      users_tasks.id,
+      (SELECT row_to_json(t) FROM tasks as t WHERE t.id =     users_tasks.task_id) AS task,
+      users_tasks.urgency_level,
+      users_tasks.status,
+      users_tasks.notes,
+      users_tasks.created_on,
+      users_tasks.completed_on,
+      (SELECT row_to_json(t) FROM users as t WHERE t.id =     users_tasks.user_id) AS resident,
+      (SELECT row_to_json(t) FROM properties as t WHERE t.id =     users_tasks.property_id) AS property
+      FROM users_tasks
+      LEFT JOIN users
+        ON users.id = users_tasks.user_id
+      LEFT JOIN properties
+        ON properties.id = users_tasks.property_id
+      WHERE properties.property_manager_id IN ($1) AND users_tasks.status <> 'Completed'`,
+    [id]
+  );
+};
+
 module.exports = {
   createUserTask,
   getTasksByUserId,
   updateUserTaskById,
-  deleteUserTaskById
+  deleteUserTaskById,
+  getOpenTasksByManagerId
 };

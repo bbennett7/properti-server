@@ -69,9 +69,21 @@ const deleteUserTaskById = async (req, res) => {
   }
 };
 
+const getOpenTasksByManagerId = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const data = await userTaskModel.getOpenTasksByManagerId(id);
+
+    return res.status(200).send(data);
+  } catch (err) {
+    return res.status(500).send(err);
+  }
+};
+
 module.exports = {
   createUserTask,
   getTasksByUserId,
   updateUserTaskById,
-  deleteUserTaskById
+  deleteUserTaskById,
+  getOpenTasksByManagerId
 };
