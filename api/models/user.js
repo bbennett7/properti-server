@@ -1,14 +1,7 @@
 const pool = require('../../config/pg-config');
 
 const createUser = async body => {
-  const values = [
-    body.id,
-    body.email,
-    body.first_name,
-    body.last_name,
-    body.unit,
-    body.account_type
-  ];
+  const values = [body.id, body.email, body.first_name, body.last_name, body.account_type];
 
   return pool.query(
     `INSERT INTO users(
@@ -16,10 +9,9 @@ const createUser = async body => {
             email,
             first_name,
             last_name,
-            unit,
             account_type
         ) VALUES (
-            $1, $2, $3, $4, $5, $6
+            $1, $2, $3, $4, $5
         ) RETURNING *`,
     values
   );
@@ -36,8 +28,8 @@ const getUserById = async id => {
         (SELECT row_to_json(t) FROM properties as t WHERE t.id = users.property_id) AS property,
         (SELECT row_to_json(t) FROM users as t WHERE t.id = properties.property_manager_id) AS property_manager
         FROM users
-        INNER JOIN properties
-            ON users.property_id = properties.id
+        LEFT JOIN properties
+          ON users.property_id = properties.id
         WHERE users.id = ($1)`,
     [id]
   );
