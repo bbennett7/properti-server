@@ -57,9 +57,21 @@ const deletePropertyById = async (req, res) => {
   }
 };
 
+const getPropertiesByManagerId = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const data = await propertyModel.getPropertiesByManagerId(id);
+
+    return res.status(200).send(data);
+  } catch (err) {
+    return res.status(500).send(err);
+  }
+};
+
 module.exports = {
   createProperty,
   getPropertyById,
   getProperties,
-  deletePropertyById
+  deletePropertyById,
+  getPropertiesByManagerId
 };

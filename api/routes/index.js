@@ -24,6 +24,7 @@ router.get('/properties', propertyController.getProperties);
 router.get('/properties/:id', propertyController.getPropertyById);
 // router.patch('/properties/:id', propertyController.updatePropertyById);
 router.delete('/properties/:id', propertyController.deletePropertyById);
+router.get('/managers/:id/properties', propertyController.getPropertiesByManagerId);
 
 // TASK
 router.post('/tasks', taskController.upsertTask);
@@ -36,5 +37,6 @@ router.patch('/users/:userId/tasks/:id', userTaskController.updateUserTaskById);
 router.delete('/users/:userId/tasks/:id', userTaskController.deleteUserTaskById);
 router.post('/users/:id/tasks', userTaskController.createUserTask);
 router.get('/users/:id/tasks', userTaskController.getTasksByUserId);
+router.get('/managers/:id/open-tasks', userTaskController.getOpenTasksByManagerId);
 
 module.exports = router;
