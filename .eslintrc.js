@@ -8,9 +8,9 @@ module.exports = {
     plugins: ["prettier"],
     rules: {
       "prettier/prettier": ["error"],
-      "camelcase": [0],
       "no-restricted-syntax": [0],
-      "consistent-return": [1] // temporary
+      "consistent-return": [1],
+      "no-underscore-dangle": [1]
     },
     settings: {
       react: {
