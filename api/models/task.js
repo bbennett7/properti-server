@@ -1,7 +1,7 @@
 const pool = require('../../config/pg-config');
 
-const upsertTask = async (id, body) => {
-  const values = [id, body.name];
+const upsertTask = async (id, name) => {
+  const values = [id, name];
 
   return pool.query(
     `INSERT INTO tasks(
@@ -10,7 +10,7 @@ const upsertTask = async (id, body) => {
         ) VALUES (
             $1, $2
         ) ON CONFLICT (name) DO UPDATE SET 
-        name=EXCLUDED.name 
+        name = $2 
         RETURNING id, name`,
     values
   );
