@@ -6,6 +6,7 @@ const userController = require('../controllers/user');
 const propertyController = require('../controllers/property');
 const taskController = require('../controllers/task');
 const userTaskController = require('../controllers/userTask');
+const yelpController = require('../controllers/yelp');
 
 /* GET home page. */
 router.get('/', function(res) {
@@ -38,5 +39,8 @@ router.delete('/users/:userId/tasks/:id', userTaskController.deleteUserTaskById)
 router.post('/users/:id/tasks', userTaskController.createUserTask);
 router.get('/users/:id/tasks', userTaskController.getTasksByUserId);
 router.get('/managers/:id/open-tasks', userTaskController.getOpenTasksByManagerId);
+
+// YELP
+router.get('/api/search-businesses', yelpController.searchBusinesses);
 
 module.exports = router;
