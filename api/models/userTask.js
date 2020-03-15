@@ -9,7 +9,7 @@ const createUserTask = async (id, userTaskId, body) => {
     body.task_id,
     body.property_id,
     body.urgency_level,
-    body.status,
+    'Open',
     body.notes,
     createdOn,
     null
@@ -35,7 +35,14 @@ const createUserTask = async (id, userTaskId, body) => {
 
 const getTasksByUserId = async id => {
   return pool.query(
-    `SELECT *
+    `SELECT 
+        users_tasks.id,
+        (SELECT row_to_json(t) FROM tasks as t WHERE t.id =     users_tasks.task_id) AS task,
+        users_tasks.urgency_level,
+        users_tasks.status,
+        users_tasks.notes,
+        users_tasks.created_on,
+        users_tasks.completed_on
         FROM users_tasks
         WHERE user_id IN ($1)`,
     [id]
