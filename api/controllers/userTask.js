@@ -50,7 +50,6 @@ const updateUserTaskById = async (req, res) => {
 
     return res.status(400).send('Error updating task for user.');
   } catch (err) {
-    console.log(err);
     return res.status(500).send(err);
   }
 };

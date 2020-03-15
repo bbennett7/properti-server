@@ -13,10 +13,8 @@ const searchBusinesses = async (req, res) => {
     );
 
     const sorted = data.data.businesses.sort((a, b) => a.distance - b.distance);
-    console.log(sorted);
     return res.status(200).send(sorted);
   } catch (err) {
-    console.log(err);
     return res.status(500).send(err);
   }
 };
