@@ -7,9 +7,23 @@ const taskModel = require('../models/task');
 const upsertTask = async (req, res) => {
   // add in task validations
   const id = uniqid();
-  req.body.name.trim();
+  const formattedName = req.body.name.trim().split(' ').map(s => {
+    if (s === ' ' || !s) {
+      return ''
+    }
+
+    const allLower = s.toLowerCase();
+    const firstLetter = allLower[0]
+    const uppercase = firstLetter.toUpperCase()
+    const lowercase = allLower.slice(1)
+
+    const formatted = `${uppercase}${lowercase}`
+
+    return formatted
+  }).join(' ').trim()
+
   try {
-    const data = await taskModel.upsertTask(id, req.body);
+    const data = await taskModel.upsertTask(id, formattedName);
     if (data.length > 0) {
       return res.status(200).send(data[0]);
     }
