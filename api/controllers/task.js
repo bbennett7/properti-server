@@ -1,11 +1,7 @@
-// const Joi = require('joi');
 const uniqid = require('uniqid');
 const taskModel = require('../models/task');
 
-// const validateCreateBody = body => {};
-
 const upsertTask = async (req, res) => {
-  // add in task validations
   const id = uniqid();
   const formattedName = req.body.name
     .trim()

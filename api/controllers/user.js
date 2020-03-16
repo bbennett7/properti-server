@@ -7,7 +7,6 @@ const validateCreateBody = body => {
     email: Joi.string().required(),
     first_name: Joi.string().required(),
     last_name: Joi.string().required(),
-    unit: Joi.string().required(),
     account_type: Joi.string().required()
   };
 
