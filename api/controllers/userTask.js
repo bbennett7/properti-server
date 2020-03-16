@@ -1,13 +1,23 @@
-// const Joi = require('joi');
+const Joi = require('joi');
 const uniqid = require('uniqid');
 const moment = require('moment');
 const userTaskModel = require('../models/userTask');
 
-// const validateCreateBody = body => {};
+const validateCreateBody = body => {
+  const schema = {
+    task_id: Joi.string().required(),
+    property_id: Joi.string().required(),
+    urgency_level: Joi.string().required(),
+    notes: Joi.string().required()
+  };
+
+  return Joi.validate(body, schema);
+};
 
 const createUserTask = async (req, res) => {
-  // add in task validations
-  // add in call to increase the user's building's task count by 1
+  const { error } = validateCreateBody(req.body);
+  if (error) return res.status(400).send({ error: error.details[0] });
+
   const userTaskId = uniqid();
   const { id } = req.params;
   try {

@@ -1,10 +1,23 @@
-// const Joi = require('joi');
+const Joi = require('joi');
 const userModel = require('../models/user');
 
-// const validateCreateBody = body => {};
+const validateCreateBody = body => {
+  const schema = {
+    id: Joi.string().required(),
+    email: Joi.string().required(),
+    first_name: Joi.string().required(),
+    last_name: Joi.string().required(),
+    unit: Joi.string().required(),
+    account_type: Joi.string().required()
+  };
+
+  return Joi.validate(body, schema);
+};
 
 const createUser = async (req, res) => {
-  // add in user validations
+  const { error } = validateCreateBody(req.body);
+  if (error) return res.status(400).send({ error: error.details[0] });
+
   try {
     const data = await userModel.createUser(req.body);
     if (data.length > 0) {
