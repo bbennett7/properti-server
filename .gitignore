@@ -1,0 +1,24 @@
+.env
+app.yaml
+cloud_sql_proxy
+sql.md
+properti-f7424-firebase-adminsdk-l10x7-b4f22eb815.json
+
+#Logs
+yarn-debug.log*
+yarn-error.log*
+
+# Dependency directories
+node_modules/
+
+# Eslint cache
+.eslintcache
+
+# MacOS system files
+.DS_Store
+
+# Windows system files
+Thumbs.db
+ehthumbs.db
+[Dd]esktop.ini
+$RECYCLE.BIN/
